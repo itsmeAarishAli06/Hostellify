@@ -1,0 +1,10 @@
+
+admin pannel intergeration 
+    repeated code => single file 
+
+    
+    admin pannel 
+        navbar 
+        sidebar 
+        content => dynamice
+        Footer 

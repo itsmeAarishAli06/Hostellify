@@ -278,7 +278,3 @@ the time to explore what we've built. We hope you see the passion and problem-so
 went into every line of code.
 
 Here's to making hostel management actually manageable! 🚀
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Version 1.0 | Built for [Hackathon Name] | 2026

@@ -135,23 +135,6 @@ INSTALLATION:
    • Open your browser and go to: http://localhost/hostelhub
    • You're ready to go!
 
-DEFAULT ACCOUNTS (for testing):
-
-Admin:
-  Email: admin@hostelhub.com
-  Password: admin123
-
-Owner:
-  Email: owner@example.com
-  Password: owner123
-
-Student:
-  Email: student@example.com
-  Password: student123
-
-(Please change these in production!)
-
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 KEY FEATURES BREAKDOWN
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -284,8 +267,7 @@ Questions? Suggestions? Just want to chat about the project?
 We'd love to hear from you!
 
 Email: hostellify.support@gmail.com
-Demo: 
-
+Demo: Available Soon !
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -273,13 +273,13 @@
                     <h3 class="about-sub-title" style="margin-top: 14px;">A Problem We Lived Through</h3>
 
                     <p class="ab-para">
-                        In 2023, four engineering students from Delhi were frantically searching for hostel accommodation before their new semester. Dozens of phone calls, fake listings, overpriced rooms, and unresponsive landlords — it was a nightmare every student knew too well.
+                        In 2023, four engineering students from Hyderabad were frantically searching for hostel accommodation before their new semester. Dozens of phone calls, fake listings, overpriced rooms, and unresponsive landlords — it was a nightmare every student knew too well.
                     </p>
                     <p class="ab-para">
                         That frustration became fuel. They asked: <strong>Why isn't there a platform that actually works for students?</strong> Two months later, the first version of HostelHub went live.
                     </p>
                     <p class="ab-para">
-                        Today, HostelHub connects thousands of students with verified, affordable hostels across 50+ cities in India — so students can focus on what matters: <strong>their education.</strong>
+                        Today, HostelHub connects thousands of students with verified, affordable hostels across 10+ cities in Pakistan — so students can focus on what matters: <strong>their education.</strong>
                     </p>
 
                     <div class="ab-highlights">

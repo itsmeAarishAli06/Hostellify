@@ -53,28 +53,28 @@
   $result = $stmt->get_result();
   $rejected_applications = $result->fetch_assoc()['total'];
 
-  // 7. Total Complaints
+  // 8. Total Complaints
   $stmt = $conn->prepare("SELECT COUNT(*) as total FROM complaints WHERE hostel_id = ?");
   $stmt->bind_param("i", $hostel_id);
   $stmt->execute();
   $result = $stmt->get_result();
   $total_complaints = $result->fetch_assoc()['total'];
 
-  // 8. Resolved Complaints
+  // 9. Resolved Complaints
   $stmt = $conn->prepare("SELECT COUNT(*) as total FROM complaints WHERE hostel_id = ? AND status = 'resolved'");
   $stmt->bind_param("i", $hostel_id);
   $stmt->execute();
   $result = $stmt->get_result();
   $resolved_complaints = $result->fetch_assoc()['total'];
 
-  // 9. Resolved Complaints
+  // 10. Resolved Complaints
   $stmt = $conn->prepare("SELECT COUNT(*) as total FROM complaints WHERE hostel_id = ? AND status = 'pending'");
   $stmt->bind_param("i", $hostel_id);
   $stmt->execute();
   $result = $stmt->get_result();
   $pending_complaints = $result->fetch_assoc()['total'];
 
-  // 10 total occupied and left
+  // 11 total occupied and left
   $stmt = $conn->prepare("SELECT SUM(capacity) as total_capacity, SUM(occupied) as total_occupied FROM room WHERE hostel_id = ?");
   $stmt->bind_param("i", $hostel_id);
   $stmt->execute();

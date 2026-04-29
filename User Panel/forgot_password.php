@@ -131,6 +131,7 @@ html, body { height: 100vh; overflow: hidden; font-family: 'Plus Jakarta Sans', 
 
   <div class="panel-left">
     <div class="form-box">
+      <a href="login.php"> Back to login !</a>
 
       <div class="badge">
         <div class="badge-dot">

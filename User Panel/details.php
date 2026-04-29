@@ -21,6 +21,7 @@
         $capacity    = $user['capacity'];
         $img    = $user['image_path'];
         $description = $user['description'];
+        $amenities = $user['amenities'];
     }
     $stmt->close();
 
@@ -108,9 +109,19 @@
             </div>
 
             <div class="features-box">
-                <span class="feature-tag">Hello</span>
-                <span class="feature-tag">Kitchen</span>
-                <span class="feature-tag">24/7 Open</span>
+                <?php 
+                if (!empty($amenities)) {
+                    $amenityList = explode(',', $amenities);
+                    foreach ($amenityList as $amenity) {
+                        $amenity = trim($amenity);
+                        if (!empty($amenity)) {
+                            echo '<span class="feature-tag">' . htmlspecialchars($amenity) . '</span>';
+                        }
+                    }
+                } else {
+                    echo '<span class="feature-tag">No amenities listed</span>';
+                }
+                ?>
             </div>
             <div class="features-box">
                 <span style = ""> <b><h3> <?php echo strtoupper($hostel_type) ?> Hostel</h3></b></span>
@@ -217,7 +228,7 @@
                     </div>
                 <?php else: ?>
                     <div class="btn-detail"
-                         style="width:100%; margin-top:15px; background:black; color:white; cursor:not-allowed;">
+                         style="width:100%; margin-top:15px; border:black   ; background:black; color:white; cursor:not-allowed;">
                         You Already Have a Booking
                     </div>
                 <?php endif; ?>

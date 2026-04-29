@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// FIX: Guard properly for both Step 2 and Step 3
 // - Always need otp_email
 // - If not yet verified, also need otp + expiry
 // - If verified, only need otp_email (otp is already unset)
+
 if (!isset($_SESSION['otp_email'])) {
     header("Location: forgot_password.php");
     exit;
@@ -155,10 +155,10 @@ html, body { height: 100vh; overflow: hidden; font-family: 'Plus Jakarta Sans', 
 </head>
 <body>
 <div class="wrapper">
-
   <div class="panel-left">
     <div class="form-box">
-
+      
+      <a href="login.php">Back to login !</a>
       <div class="badge">
         <div class="badge-dot">
           <?php if ($otp_verified): ?>

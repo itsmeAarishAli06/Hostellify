@@ -35,7 +35,7 @@ $success = isset($_GET['success']);
                         <div class="contact-info-icon" style="background: linear-gradient(135deg, #059669, #10b981)"><i class="fas fa-envelope"></i></div>
                         <div class="contact-info-text">
                             <span class="contact-info-label">Email Us</span>
-                            <span class="contact-info-value">support@hostelhub.com</span>
+                            <span class="contact-info-value">hostellify.support@gmail.com</span>
                             <span class="contact-info-sub">We reply within 2 hours</span>
                         </div>
                     </div>

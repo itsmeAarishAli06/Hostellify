@@ -29,7 +29,7 @@
             <div class="footer-section">
                 <h3>Contact Info</h3>
                 <div class="footer-contact"><i class="fas fa-phone-alt"></i><span>03172873743</span></div>
-                <div class="footer-contact"><i class="fas fa-envelope"></i><span>support@hostelhub.com</span></div>
+                <div class="footer-contact"><i class="fas fa-envelope"></i><span>hostellify.support@gmail.com</span></div>
                 <div class="footer-contact"><i class="fas fa-map-marker-alt"></i><span>Qasimabad, Hyderabad</span></div>
             </div>
             <div class="footer-section">
@@ -40,9 +40,10 @@
                 </a>    
                     <div class="social-icon" title="Twitter"><i class="fab fa-twitter"></i></div>
                 <a style="text-decoration:none; " href="https://www.instagram.com/aarish_ali_memon/" target="_blank">    
-                    <div class="social-icon" title="Instagram"><i class="fab fa-instagram"></i>
+                    <div class="social-icon" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </div>
                 </a>    
-                </div>
                 <a style="text-decoration:none; " href="https://linkedin.com/in/aarish-ali-a20704367" target="_blank">
                  <div class="social-icon" title="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>

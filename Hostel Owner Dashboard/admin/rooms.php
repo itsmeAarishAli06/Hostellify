@@ -4,6 +4,10 @@ session_start();
 
 require_once "../../config.php";
 
+if (isset($_GET['cap']) && $_GET['cap'] === 'wrong_cap') {
+  echo "<script>alert('You cannot reduce the capacity below the number of occupied students!');</script>";
+}
+
   $stmt = $conn->prepare("SELECT id FROM hostel WHERE owner_id = ?"); // Removed extra )
   $stmt->bind_param('i', $_SESSION['owner_id']);
   $stmt->execute();

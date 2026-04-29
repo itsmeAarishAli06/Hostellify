@@ -1,5 +1,11 @@
 <?php
 
+    require '../vendor/autoload.php';
+
+    $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+    $dotenv->load();
+
+
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
@@ -55,32 +61,23 @@ try {
     $mail->isSMTP();                                            //Send using SMTP
     $mail->Host       = 'smtp.gmail.com';                 //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'itsmeaarish06@gmail.com';                     //SMTP username
-    $mail->Password   = 'iloq pcxg vdah pqoq';                               //SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;           
-    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-    // Add these to improve deliverability
-    $mail->SMTPOptions = array(
-        'ssl' => array(
-            'verify_peer' => false,
-            'verify_peer_name' => false,
-            'allow_self_signed' => true
-        )
-    );
+    $mail->Username   = $_ENV['MAIL_USER'];                     //SMTP username
+    $mail->Password   = $_ENV['MAIL_PASS'];                               //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port       = 465;            //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
-    $mail->setFrom('itsmeaarish06@gmail.com', 'Hostel Account');
-    $mail->addAddress($email, 'Hostel Web Applaication');     //Add a recipient
+    $mail->setFrom($_ENV['MAIL_USER'], 'Hostel Account');
+    $mail->addAddress($email, 'Hostel Web Application');     //Add a recipient
     
     //Content
     $mail->isHTML(true);
-    $mail->Subject = 'Verify Your Account';
+    $mail->Subject = 'Your HostelHub Verification Code';
     $mail->Body = ($user_type == 'student') ? 'Dear User,<br><br>
 
-    Your OTP for verification is: <b>'.$otp.'</b><br><br>
+    Your password for verification is: <b>'.$otp.'</b><br><br>
     Please enter this OTP into your password field to complete your verification.<br>
-    You can change this OTP / Password form your profile Dashboard<br>
+    You can change this OTP / Password from your profile Dashboard<br>
     Do not share this OTP with anyone.<br><br>
     Best Regards,<br>
     Hostel Management System
@@ -183,7 +180,7 @@ if (isset($_POST['login_btn'])){
                 header("location:../User Panel/index.php");
                 exit();
             } else{
-                header("location:../User Panel/login.php");
+                header("location:../User Panel/login.php?status=blocked");
                 exit();
             }
         }  
@@ -437,10 +434,39 @@ if (isset($_POST['save_room'])) {
         $price_monthly  = $_POST['price_monthly'];
         $status  = $_POST['status'];
 
+        $stmt0 = $conn->prepare("SELECT capacity , occupied from room WHERE `id` = ? ");
+        $stmt0->bind_param('i',$room_id);
+        $stmt0->execute();
+        $res = $stmt0->get_result();
+        if ($row = $res->fetch_assoc() ) {
+            $cap = $row['capacity'];
+            $occ = $row['occupied'];
+        }
+
+        if ($occ > $capacity) {
+            header("location:../Hostel Owner Dashboard/admin/rooms.php?cap=wrong_cap");
+            exit();
+        }
+
+        $stmt0->close();
+
         $stmt = $conn->prepare("UPDATE `room` SET `room_type` = ? , `capacity` = ? ,`price_monthly` = ? , `status` = ? WHERE `id` = ? ");
         $stmt->bind_param('siisi',$room_type,$capacity,$price_monthly,$status,$room_id);
         $stmt->execute();
         $stmt->close();
+
+        $stmt1 = $conn->prepare("
+            UPDATE room 
+            SET status = CASE 
+                WHEN occupied >= capacity THEN 'full'
+                ELSE 'available'
+            END
+            WHERE id = ?
+        ");
+        $stmt1->bind_param('i', $room_id);
+        $stmt1->execute();
+        $stmt1->close();
+
 
         header("location: ../Hostel Owner Dashboard/admin/rooms.php");
         exit();
@@ -661,14 +687,14 @@ if (isset($_POST['booking_id'])) {
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'itsmeaarish06@gmail.com';
-            $mail->Password   = 'iloq pcxg vdah pqoq';
+            $mail->Username   = $_ENV['MAIL_USER'];
+            $mail->Password   = $_ENV['MAIL_PASS'];
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port       = 465;
             $mail->SMTPDebug  = 0;
  
             // From & To
-            $mail->setFrom('itsmeaarish06@gmail.com', 'Hostel Management');
+            $mail->setFrom($_ENV['MAIL_USER'], 'Hostel Management');
             $mail->addAddress($details['student_email'], $details['student_name']);
  
             // Email content
@@ -698,45 +724,6 @@ if (isset($_POST['booking_id'])) {
 
     }
  
-    //B. Owner clicked "Rejected"
-    // elseif ($status === 'Rejected') {
- 
-    //     // ── B1. Check if this booking already had a room assigned ,
-    //     //    Decrement the room already linked to this booking.
-    //     $stmt5 = $conn->prepare("
-    //         SELECT room_id
-    //         FROM   booking
-    //         WHERE  id = ?
-    //     ");
-    //     $stmt5->bind_param('i', $booking_id);
-    //     $stmt5->execute();
-    //     $existing = $stmt5->get_result()->fetch_assoc();
-    //     $stmt5->close();
- 
-    //     // ── B2. Only decrement if a room was actually assigned ──
-    //     if (!empty($existing['room_id'])) {
- 
-    //         $stmt6 = $conn->prepare("
-    //             UPDATE room
-    //             SET    occupied = occupied - 1
-    //             WHERE  id = ?
-    //         ");
-    //         $stmt6->bind_param('i', $existing['room_id']);
-    //         $stmt6->execute();
-    //         $stmt6->close();
- 
-    //         // ── B3. Clear the room from the booking record !
-    //         $stmt7 = $conn->prepare("
-    //             UPDATE booking
-    //             SET    room_id = NULL
-    //             WHERE  id = ?
-    //         ");
-    //         $stmt7->bind_param('i', $booking_id);
-    //         $stmt7->execute();
-    //         $stmt7->close();
-    //     }
-    // }Mine code 
-
     // Rejection email.
     elseif ($status === 'Rejected') {
 
@@ -780,13 +767,13 @@ if (isset($_POST['booking_id'])) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'itsmeaarish06@gmail.com';
-        $mail->Password   = 'iloq pcxg vdah pqoq';
+        $mail->Username   = $_ENV['MAIL_USER'];
+        $mail->Password   = $_ENV['MAIL_PASS'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port       = 465;
         $mail->SMTPDebug  = 0;
 
-        $mail->setFrom('itsmeaarish06@gmail.com', 'Hostel Management');
+        $mail->setFrom($_ENV['MAIL_USER'], 'Hostel Management');
         $mail->addAddress($rejected['student_email'], $rejected['student_name']);
 
         $mail->isHTML(true);
@@ -841,7 +828,6 @@ if (isset($_POST['del_hostel'])) {
 // Complaint Submit Button
 
 if (isset($_POST['conplaint_sub_btn'])) {
-
 
     // Get the User Id !
     $user_id = $_SESSION['user_id'];
@@ -942,18 +928,17 @@ if (isset($_POST['add_student'])) {
 
     // Check that if the email and pass is used
 
-    // $query = "SELECT `email`,`password` FROM student WHERE `email` = ? AND `password` = ?";
-    // $stmt0 = $conn->prepare($query);
-    // $stmt0->bind_param("ss",$email,$password);
-    // $stmt0->execute();
-    // $res1 = $stmt0->get_result();
-    // if (mysqli_num_rows($res1) > 0) {  
-    //     $user0 = mysqli_fetch_assoc($res1);
-    //     if ($user0['email'] == $email || $user0['password'] ) {
-    //         echo "data not added";
-    //        return;
-    //     }
-    // }        
+    $query = "SELECT email FROM student WHERE email = ?";
+    $stmt0 = $conn->prepare($query);
+    $stmt0->bind_param("s", $email);
+    $stmt0->execute();
+
+    $res1 = $stmt0->get_result();
+
+    if ($res1->num_rows > 0) {
+        header("location:../Hostel Owner Dashboard/admin/My_students.php?error=1");
+        exit;
+    }        
 
     // Data added in the studnet table 
     $stmt1 = $conn->prepare("INSERT INTO `student`(`name`,`email`,`password`,`contact`,`address`) VALUES(?,?,?,?,?)");
@@ -1103,13 +1088,12 @@ if($_POST['action'] == 'get_complaint_details') {
 
 
 // ============================================================
-//  FORGOT PASSWORD — paste this block into your backend.php
-//  Place it BEFORE your existing login_btn check
+//  FORGOT PASSWORD 
 // ============================================================
 
 $action = $_POST['action'] ?? $_GET['action'] ?? '';
 
-// ── STEP 1: Send OTP ──────────────────────────────────────
+// ── STEP 1: Send OTP 
 if ($action === 'send_otp') {
 
     $email = trim($_POST['email'] ?? '');
@@ -1120,14 +1104,24 @@ if ($action === 'send_otp') {
         header("Location: ../User Panel/forgot_password.php");
         exit;
     }
-
     // Check if email exists — admin table uses admin_id, others use id
     $found = false;
     $checks = [
-        'student' => 'id',
-        'owner'   => 'id',
-        'admin'   => 'id'
+        'student' => 'email'
     ];
+    $sta = "blocked";
+    foreach ($checks as $table => $eml) {
+        $stmt = $conn->prepare("SELECT $eml FROM $table WHERE status = ? AND email = ? LIMIT 1");
+        $stmt->bind_param('ss',$sta,$email);
+        $stmt->execute();
+        $stmt->store_result();
+        if ($stmt->num_rows > 0) { 
+            header("location:../User Panel/login.php?status=blocked");
+            exit();
+        }
+        $stmt->close();
+    }
+
     foreach ($checks as $table => $pk) {
         $stmt = $conn->prepare("SELECT $pk FROM $table WHERE email = ? LIMIT 1");
         $stmt->bind_param('s', $email);
@@ -1164,13 +1158,13 @@ if ($action === 'send_otp') {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'itsmeaarish06@gmail.com';
-        $mail->Password   = 'iloq pcxg vdah pqoq';
+        $mail->Username   = $_ENV['MAIL_USER'];
+        $mail->Password   = $_ENV['MAIL_PASS'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port       = 465;
         $mail->SMTPDebug  = 0;
 
-        $mail->setFrom('itsmeaarish06@gmail.com', 'HostelHub');
+        $mail->setFrom($_ENV['MAIL_USER'], 'HostelHub');
         $mail->addAddress($email);
         $mail->isHTML(true);
         $mail->Subject = 'Your HostelHub Password Reset OTP';

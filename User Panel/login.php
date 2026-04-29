@@ -1,747 +1,347 @@
-<!-- Now i want to make a forgot password feature in it , 1st i am thinking that i should make a new form for that having only 1 input of email ok and when he will write the eimal and sebmit there so the otp will be sent on his email.  and  if the email matches then he will get the oprion of the write a new password. So now i am giveing you the login page form it take only 1 input and then do all of the work regardingly -->
-<!-- In this the passowrd and the email are the inputs -->
-
+<?php
+  if (isset($_GET['status']) && $_GET['status'] === "blocked") {
+    echo "<script>alert('You are blocked , So pls contact to the admin via contact form !');</script>";
+  }
+?>
 <!DOCTYPE html>
 
 <html lang="en">
 
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>HostelHub — Sign In</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HostelHub — Sign In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
 <style>
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-
-
 :root {
-
   --blue:      #1a56db;
-
   --blue-dark: #0f2b6e;
-
   --text:      #0c1a3a;
-
   --muted:     #64748b;
-
   --border:    #cbd5e1;
-
   --input-bg:  #ffffff;
-
   --bg:        #f1f5fd;
-
   --label:     #475569;
-
 }
-
-
-
 html, body {
-
   height: 100vh;
-
   overflow: hidden;
-
   font-family: 'Plus Jakarta Sans', sans-serif;
 
 }
-
-
-
 .wrapper {
-
   display: grid;
-
   grid-template-columns: 1fr 1fr;
-
   height: 100vh;
-
   overflow: hidden;
-
 }
-
-
-
 /* ═══════════ LEFT PANEL — Form side ═══════════ */
 
 .panel-left {
-
   background: var(--bg);
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   padding: 40px 48px;
-
   overflow: hidden;
-
   position: relative;
-
   height: 100vh;
-
 }
-
-
-
 .panel-left::before {
-
   content: '';
-
   position: absolute;
-
   width: 480px; height: 480px;
-
   border-radius: 50%;
-
   background: radial-gradient(circle, #dbeafe55 0%, transparent 70%);
-
   top: -160px; left: -160px;
-
   pointer-events: none;
-
 }
-
-
-
 .form-box {
-
   width: 100%;
-
   max-width: 420px;
-
   position: relative; z-index: 1;
-
 }
-
-
-
 /* Badge */
 
 .badge {
-
   display: inline-flex; align-items: center; gap: 8px;
-
   background: #fff;
-
   border: 1.5px solid #c7d7f8;
-
   border-radius: 100px;
-
   padding: 5px 16px 5px 8px;
-
   font-size: 0.75rem; font-weight: 700;
-
   color: var(--blue); letter-spacing: 0.06em; text-transform: uppercase;
-
   margin-bottom: 18px;
-
   box-shadow: 0 2px 10px rgba(26,86,219,0.1);
-
   animation: slideUp .5s ease .1s both;
-
 }
-
-
-
 .badge-dot {
-
   width: 22px; height: 22px;
-
   background: var(--blue); border-radius: 50%;
-
   display: flex; align-items: center; justify-content: center;
-
 }
-
-
-
 .form-h1 {
-
   font-family: 'DM Serif Display', serif;
-
   font-size: 1.8rem; color: var(--text);
-
   letter-spacing: -0.4px; line-height: 1.2;
-
   margin-bottom: 6px;
-
   animation: slideUp .5s ease .18s both;
-
 }
-
-
-
 .form-sub {
-
   font-size: 0.85rem; color: var(--muted);
-
   line-height: 1.6; margin-bottom: 28px;
-
   animation: slideUp .5s ease .26s both;
-
 }
-
-
-
 /* ─── INPUT GROUPS ─── */
 
 .inp-group {
-
   margin-bottom: 18px;
-
 }
-
-
-
 .inp-group:nth-child(1) { animation: slideUp .5s ease .34s both; }
-
 .inp-group:nth-child(2) { animation: slideUp .5s ease .42s both; }
-
-
-
 .inp-label-row {
-
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
   margin-bottom: 6px;
-
 }
-
-
-
 .inp-label {
-
   font-size: 0.75rem;
-
   font-weight: 700;
-
   color: var(--label);
-
   letter-spacing: 0.04em;
-
   text-transform: uppercase;
-
 }
-
-
-
 .forgot-link {
-
   font-size: 0.75rem;
-
   font-weight: 600;
-
   color: var(--blue);
-
   text-decoration: none;
-
   letter-spacing: 0.01em;
-
 }
-
-
-
 .forgot-link:hover { text-decoration: underline; }
-
-
-
 .inp-wrap { position: relative; }
-
-
-
 .inp-icon {
-
   position: absolute;
-
   left: 14px; top: 50%;
-
   transform: translateY(-50%);
-
   width: 18px; height: 18px;
-
   color: #94a3b8;
-
   pointer-events: none;
-
   transition: color .2s;
-
   display: flex; align-items: center; justify-content: center;
-
 }
-
-
-
 .inp-wrap:focus-within .inp-icon { color: var(--blue); }
-
-
-
 .inp-field {
-
   display: block;
-
   width: 100%;
-
   height: 46px;
-
   padding: 0 44px 0 46px;
-
   background: var(--input-bg);
-
   border: 1.5px solid var(--border);
-
   border-radius: 10px;
-
   font-family: 'Plus Jakarta Sans', sans-serif;
-
   font-size: 0.9rem;
-
   font-weight: 500;
-
   color: var(--text);
-
   outline: none;
-
   transition: border-color .2s, box-shadow .2s;
-
   box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-
 }
-
-
-
 .inp-field::placeholder {
-
   color: #b0bcd4;
-
   font-weight: 400;
-
 }
-
-
-
 .inp-field:focus {
-
   border-color: var(--blue);
-
   box-shadow: 0 0 0 4px rgba(26,86,219,0.1);
-
 }
-
-
-
 .eye-btn {
-
   position: absolute;
-
   right: 12px; top: 50%;
-
   transform: translateY(-50%);
-
   background: none; border: none; cursor: pointer;
-
   color: #94a3b8; padding: 4px;
-
   display: flex; align-items: center;
-
   transition: color .2s;
-
 }
-
-
-
 .eye-btn:hover { color: var(--blue); }
-
-
-
 /* ─── Error message ─── */
-
 .err-msg {
-
   display: none;
-
   font-size: 0.7rem; font-weight: 600;
-
   color: #ef4444;
-
   margin-top: 5px;
-
   padding: 5px 10px;
-
   background: #fef2f2;
-
   border-radius: 6px;
-
   border: 1px solid #fecaca;
-
   animation: slideUp .25s ease;
-
 }
-
-
-
 .err-msg.show { display: block; }
-
-
-
 /* ═══════════ ROLE SELECTOR ═══════════ */
-
 .role-group {
-
   margin-bottom: 18px;
-
   animation: slideUp .5s ease .48s both;
-
 }
-
 .role-label-row {
-
   margin-bottom: 8px;
-
 }
-
 .role-options {
 
   display: grid;
-
   grid-template-columns: repeat(3, 1fr);
-
   gap: 8px;
-
 }
-
 .role-option {
-
   position: relative;
-
 }
 .role-option input[type="radio"] {
-
   position: absolute;
-
   opacity: 0;
-
   width: 0; height: 0;
-
 }
-
 .role-card {
-
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   justify-content: center;
-
   gap: 6px;
-
   padding: 10px 8px;
-
   background: #fff;
-
   border: 1.5px solid var(--border);
-
   border-radius: 10px;
-
   cursor: pointer;
-
   transition: border-color .2s, box-shadow .2s, background .2s, transform .15s;
-
   box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-
   user-select: none;
-
 }
-
 .role-card:hover {
-
   border-color: #93c5fd;
-
   box-shadow: 0 0 0 3px rgba(26,86,219,0.08);
-
   transform: translateY(-1px);
-
 }
-
 .role-option input:checked + .role-card {
-
   border-color: var(--blue);
-
   background: #eff6ff;
-
   box-shadow: 0 0 0 3px rgba(26,86,219,0.12);
-
 }
-
 .role-ico {
-
   width: 32px; height: 32px;
-
   border-radius: 8px;
-
   background: #f1f5fd;
-
   display: flex; align-items: center; justify-content: center;
-
   color: #94a3b8;
-
   transition: background .2s, color .2s;
-
 }
-
 .role-option input:checked + .role-card .role-ico {
-
   background: #dbeafe;
-
   color: var(--blue);
-
 }
-
 .role-name {
-
   font-size: 0.7rem;
-
   font-weight: 700;
-
   color: var(--muted);
-
   letter-spacing: 0.02em;
-
   text-align: center;
-
   transition: color .2s;
-
 }
-
 .role-option input:checked + .role-card .role-name {
-
   color: var(--blue);
-
 }
-
 .role-tick {
-
   position: absolute;
-
   top: 6px; right: 6px;
-
   width: 14px; height: 14px;
-
   background: var(--blue);
-
   border-radius: 50%;
-
   display: flex; align-items: center; justify-content: center;
-
   opacity: 0;
-
   transform: scale(0);
-
   transition: opacity .2s, transform .2s;
-
 }
-
 .role-option input:checked ~ .role-tick {
-
   opacity: 1;
-
   transform: scale(1);
-
 }
-
 .role-err {
-
   display: none;
-
   font-size: 0.7rem; font-weight: 600;
-
   color: #ef4444;
-
   margin-top: 5px;
-
   padding: 5px 10px;
-
   background: #fef2f2;
-
   border-radius: 6px;
-
   border: 1px solid #fecaca;
-
 }
-
 .role-err.show { display: block; }
-
-
-
 /* ─── Remember row ─── */
-
 .remember-row {
-
   display: flex; align-items: center; gap: 10px;
-
   margin-bottom: 20px;
-
   animation: slideUp .5s ease .56s both;
-
 }
-
-
-
 .remember-chk {
-
   appearance: none; -webkit-appearance: none;
-
   width: 18px; height: 18px;
-
   min-width: 18px;
-
   border: 2px solid var(--border); border-radius: 5px;
-
   background: #fff; cursor: pointer;
-
   position: relative; transition: all .2s;
-
 }
-
-
-
 .remember-chk:checked { background: var(--blue); border-color: var(--blue); }
-
-
-
 .remember-chk:checked::after {
-
   content: '';
-
   position: absolute;
-
   left: 3px; top: 0px;
-
   width: 8px; height: 5px;
-
   border-left: 2px solid #fff;
-
   border-bottom: 2px solid #fff;
-
   transform: rotate(-45deg);
-
 }
-
-
-
 .remember-txt { font-size: 0.8rem; color: var(--muted); font-weight: 500; }
-
-
-
 /* ─── Submit btn ─── */
-
 .submit-btn {
-
   display: flex; align-items: center; justify-content: center; gap: 10px;
-
   width: 100%; height: 48px;
-
   background: linear-gradient(135deg, #0f2b6e 0%, #1a56db 55%, #2563eb 100%);
-
   border: none; border-radius: 11px;
-
   color: #fff;
-
   font-family: 'Plus Jakarta Sans', sans-serif;
-
   font-size: 0.92rem; font-weight: 700; letter-spacing: 0.02em;
-
   cursor: pointer;
-
   position: relative; overflow: hidden;
-
   transition: transform .15s, box-shadow .25s;
-
   box-shadow: 0 5px 20px rgba(26,86,219,0.38);
-
   animation: slideUp .5s ease .63s both;
-
 }
-
-
-
 .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(26,86,219,0.5); }
-
-
-
 .submit-btn:active { transform: translateY(0); }
-
-
-
 .submit-btn::after {
-
   content: '';
-
   position: absolute; inset: 0;
-
-  background: linear-gradient(100deg, transparent 38%, rgba(255,255,255,0.18) 52%, transparent 66%);
-
+  background: linear-gradient(100deg, transparent 38%, rgba(255,255,255,0.18) 52%, ransparent 66%);
   transform: translateX(-120%);
-
   transition: transform .55s ease;
-
 }
-
-
-
 .submit-btn:hover::after { transform: translateX(120%); }
-
-
-
 .btn-icon {
-
   width: 24px; height: 24px;
-
   background: rgba(255,255,255,0.18);
-
   border-radius: 6px;
-
   display: flex; align-items: center; justify-content: center;
-
   transition: transform .2s;
-
 }
-
-
-
 .submit-btn:hover .btn-icon { transform: translateX(3px); }
-
-
-
 /* ─── Sign-up row ─── */
-
 .signup-row {
-
   text-align: center; margin-top: 16px;
-
   font-size: 0.82rem; color: var(--muted);
-
   animation: slideUp .5s ease .7s both;
-
 }
-
-
-
 .signup-row a {
 
   color: var(--blue); font-weight: 700;
@@ -1311,11 +911,8 @@ html, body {
       <div class="stats-grid">
 
         <div class="stat-card">
-
           <span class="stat-num">500+</span>
-
           <span class="stat-desc">Happy Students</span>
-
         </div>
 
         <div class="stat-card">
@@ -1371,17 +968,13 @@ document.getElementById('loginBtn').addEventListener('click', function(e) {
   if (this.disabled) return;
 
   const el = document.createElement('span');
-
   el.className = 'ripple-el';
-
   const rect = this.getBoundingClientRect();
 
   el.style.left = (e.clientX - rect.left - 5)+'px';
-
   el.style.top  = (e.clientY - rect.top  - 5)+'px';
 
   this.appendChild(el);
-
   el.addEventListener('animationend', () => el.remove());
 
 });
@@ -1462,9 +1055,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     const fb = document.querySelector('.form-box');
 
     fb.style.animation = 'none';
-
     void fb.offsetWidth;
-
     fb.style.animation = 'shake .4s ease';
 
   }
@@ -1512,13 +1103,9 @@ const st = document.createElement('style');
 st.textContent = `
 
   @keyframes shake {
-
     0%,100%{transform:translateX(0)}
-
     20%,60%{transform:translateX(-8px)}
-
     40%,80%{transform:translateX(8px)}
-
   }
 
   @keyframes spin { to{transform:rotate(360deg)} }

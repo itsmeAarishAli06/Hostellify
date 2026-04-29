@@ -9,7 +9,7 @@
                 <div class="hero-content">
                     <div class="hero-tag">PREMIUM STUDENT HOSTEL LIVING</div>
                     <h1>Find Your <span>Perfect Hostel Home</span></h1>
-                    <p>Safe, Comfortable, and Affordable Living for Students Across India</p>
+                    <p>Safe, Comfortable, and Affordable Living for Students Across Pakistan</p>
                 </div>
             </div>
 
@@ -22,7 +22,7 @@
 
                 <div class="blog-content">
                     <h3>🏠 Premium Student Accommodation Made Simple</h3>
-                    <p>HostelHub is revolutionizing the way students find and manage their hostel accommodations across India. We understand that finding the perfect place to live while studying is crucial to your success and happiness.</p>
+                    <p>HostelHub is revolutionizing the way students find and manage their hostel accommodations across Pakistan. We understand that finding the perfect place to live while studying is crucial to your success and happiness.</p>
 
                     <h3 style="margin-top: 30px;">✨ What Makes Us Different</h3>
                     <ul>

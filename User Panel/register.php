@@ -3,8 +3,10 @@ session_start();
 
 require_once "../config.php";
 
-$_SESSION['email_taken'] = false ;
-// echo $_SESSION['email_taken'];
+if (!isset($_SESSION['email_taken'])) {
+    $_SESSION['email_taken'] = false;
+}
+
 $otp_sent  = isset($_GET['otp']) && $_GET['otp'] === 'sent';
 
 // Pre-fill fields after error so user doesn't retype everything
@@ -536,7 +538,7 @@ html, body { height: 100%; font-family: 'Plus Jakarta Sans', sans-serif; }
       <?php endif; ?>
 
       <!-- EMAIL TAKEN BANNER -->
-      <?php   if (isset($_SESSION['email_taken']) && $_SESSION['email_taken']  && !(isset($_GET['otp']) && $_GET['otp'] === 'sent')): ?>
+      <?php   if ( (isset($_SESSION['email_taken']) && $_SESSION['email_taken'] )  && !(isset($_GET['otp']) && $_GET['otp'] === 'sent')): ?>
       <div class="alert alert-error">
         <span class="alert-icon">⚠️</span>
         <div>

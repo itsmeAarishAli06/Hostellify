@@ -2,7 +2,11 @@
   // approved
   require_once "../../config.php";
 
-  $name_searched = $_GET['search'];
+  if (isset($_GET['error']) && $_GET['error']==1) {
+    echo "<script>alert('Email already exists !');</script>";
+  }
+
+  $name_searched = $_GET['search'] ?? "N/A";
 
   $stmt = $conn->prepare("SELECT COUNT(*) as total FROM booking WHERE hostel_id = ? AND status = 'Approved'");
   $stmt->bind_param("i",$_SESSION['hostel_id']);

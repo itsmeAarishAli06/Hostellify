@@ -283,9 +283,8 @@ Questions? Suggestions? Just want to chat about the project?
 
 We'd love to hear from you!
 
-Project Repository: [Your GitHub/GitLab link here]
-Email: [Your email here]
-Demo: [Live demo URL if available]
+Email: hostellify.support@gmail.com
+Demo: 
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

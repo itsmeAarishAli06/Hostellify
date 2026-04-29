@@ -654,11 +654,7 @@ if (isset($_POST['booking_id'])) {
         $stmt3->bind_param('i', $room['id']);
         $stmt3->execute();
         $stmt3->close();
- 
-        // ── A4. Fetch student name, student email, hostel name ──
-        //    * was TWO separate queries (stmt3 + stmt4); one JOIN is enough
-        //    * student email comes from DB, not $_SESSION['user_email']
-        //         ($_SESSION holds the hostel OWNER's email, not the student's)
+
         $stmt4 = $conn->prepare("
             SELECT  b.room_type,
                     s.name        AS student_name,
@@ -1085,7 +1081,6 @@ if($_POST['action'] == 'get_complaint_details') {
     }
     exit;
 }
-
 
 // ============================================================
 //  FORGOT PASSWORD 
